@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  as:
+    build:
+      context: .
+      dockerfile: AS/Dockerfile
+    ports:
+      - "53533:53533/udp"
+    volumes:
+      - ./data:/var/lib/address_server
+    networks:
+      - mynetwork
+
+  fs:
+    build:
+      context: .
+      dockerfile: FS/Dockerfile
+    ports:
+      - "9090:9090"
+    depends_on:
+      - as
+    networks:
+      - mynetwork
+
+  us:
+    build:
+      context: .
+      dockerfile: US/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - as
+      - fs
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  dns_db_volume:
