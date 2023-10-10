@@ -1,0 +1,6 @@
+TYPE A
+NAME fibonacci.com
+VALUE 127.0.0.1
+TYPE A
+NAME fibonacci2.com
+VALUE 127.0.0.1
